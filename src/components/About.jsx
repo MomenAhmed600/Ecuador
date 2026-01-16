@@ -6,6 +6,7 @@ import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 const About = () => {
   const [formData, setFormData] = useState({
@@ -33,17 +34,17 @@ const About = () => {
 
     emailjs
       .send(
-        "service_s2h8ijs", //{/* Service ID */}
-        "template_ntkgq84", //{/* Template ID */}
+        "service", //{/* Service ID */}
+        "template", //{/* Template ID */}
         formData,
-        "zzGkRAo6r8egktGE0" //{/* Public Key */}
+        "", //{/* Public Key */}
       )
       .then(() => {
-        setSuccess("Message sent successfully ✅");
+        setSuccess("Message sent successfully ");
         setFormData({ name: "", email: "", message: "" });
       })
       .catch(() => {
-        setError("Something went wrong ❌");
+        setError("Something went wrong ");
       })
       .finally(() => {
         setLoading(false);
@@ -59,6 +60,16 @@ const About = () => {
   L.Marker.prototype.options.icon = DefaultIcon;
 
   const alexPos = [31.205446992835792, 29.90515059801361];
+
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.error("Autoplay was prevented:", error);
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -82,14 +93,13 @@ const About = () => {
             {/* section-video */}
             <div className="w-full h-[400px] overflow-hidden rounded-lg shadow-2xl">
               <video
+                ref={videoRef}
                 className="w-full h-full object-cover"
-                autoPlay
                 loop
                 muted
                 playsInline
               >
                 <source src="/img/about-video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
               </video>
             </div>
 
