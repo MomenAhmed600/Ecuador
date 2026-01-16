@@ -1,30 +1,34 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import About from "./components/About";
-// import Home from "./components/Home";
-// import Menu from "./components/Menu";
-// import Products from "./components/Products";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 const Menu = lazy(() => import("./components/Menu"));
 const Home = lazy(() => import("./components/Home"));
 const Products = lazy(() => import("./components/Products"));
+import { SyncLoader } from "react-spinners";
 const App = () => {
   return (
-    <div>
-      <Router>
-        <Navbar />
-        <div>
+    <Router>
+      <Navbar />
+      <main>
+        <Suspense
+          fallback={
+            <div className="flex justify-center items-center min-h-[60vh]">
+              <SyncLoader color="#000000" size={15} margin={5} />
+            </div>
+          }
+        >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/menu/:type?" element={<Menu />} />
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
           </Routes>
-        </div>
-        <Footer />
-      </Router>
-    </div>
+        </Suspense>
+      </main>
+      <Footer />
+    </Router>
   );
 };
 
