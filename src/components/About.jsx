@@ -63,11 +63,31 @@ const About = () => {
 
   const videoRef = useRef(null);
 
+  // useEffect(() => {
+  //   if (videoRef.current) {
+  //     videoRef.current.play().catch((error) => {
+  //       console.error("Autoplay was prevented:", error);
+  //     });
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.error("Autoplay was prevented:", error);
-      });
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.setAttribute("muted", "");
+      video.playsInline = true;
+
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {
+          const playVideo = () => {
+            video.play();
+            window.removeEventListener("touchstart", playVideo);
+          };
+          window.addEventListener("touchstart", playVideo);
+        });
+      }
     }
   }, []);
 
@@ -98,6 +118,7 @@ const About = () => {
                 loop
                 muted
                 playsInline
+                poster="/img/video-photo.PNG"
               >
                 <source src="/img/about-video.mp4" type="video/mp4" />
               </video>
