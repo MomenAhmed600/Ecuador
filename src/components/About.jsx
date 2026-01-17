@@ -1,12 +1,11 @@
-import { useState } from "react";
 import emailjs from "emailjs-com";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { motion } from "framer-motion";
 import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
-import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import "leaflet/dist/leaflet.css";
+import { useEffect, useState } from "react";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 const About = () => {
   useEffect(() => {
@@ -65,57 +64,6 @@ const About = () => {
 
   const alexPos = [31.205446992835792, 29.90515059801361];
 
-  // const videoRef = useRef(null);
-
-  // useEffect(() => {
-  //   if (videoRef.current) {
-  //     videoRef.current.play().catch((error) => {
-  //       console.error("Autoplay was prevented:", error);
-  //     });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const video = videoRef.current;
-  //   if (video) {
-  //     video.muted = true;
-  //     video.playsInline = true;
-
-  //     const attemptPlay = () => {
-  //       video.play().catch((error) => {
-  //         console.log("Autoplay failed, waiting for user interaction:", error);
-  //       });
-  //     };
-
-  //     attemptPlay();
-
-  //     const playOnGesture = () => {
-  //       video.play();
-  //       window.removeEventListener("touchstart", playOnGesture);
-  //     };
-
-  //     window.addEventListener("touchstart", playOnGesture);
-
-  //     return () => window.removeEventListener("touchstart", playOnGesture);
-  //   }
-  // }, []);
-
-  const [isvideo, setIstvideo] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const videoRef = useRef(null);
-  useEffect(() => {
-    // ندهنا الملف من الـ public مباشرة عشان يشتغل على netlify
-    fetch("/db.json")
-      .then((res) => res.json())
-      .then((data) => {
-        // تأكد إنك مسمي الكي في db.json بـ "ABOUT-VIDEO" أو غيره حسب اختيارك
-        if (data["ABOUT-VIDEO"]) {
-          setIstvideo(data["ABOUT-VIDEO"]);
-        }
-      })
-      .catch((err) => console.error("Failed to fetch video data:", err));
-  }, []);
-
   return (
     <>
       <section className="bg-gray-100 text-black py-16 px-6 md:px-12 lg:px-24">
@@ -136,40 +84,13 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* section-video */}
-            {isvideo.map((product) => (
-              <div
-                key={product.id}
-                className="relative w-full h-[400px] bg-black rounded-lg overflow-hidden"
-              >
-                {/* الصورة اللي هتظهر مكان التحميل (Poster) */}
-                <video
-                  ref={videoRef}
-                  src={product.video}
-                  poster={product.thumbnail} // الصورة من الـ json
-                  loop
-                  muted
-                  playsInline
-                  autoPlay
-                  className="w-full h-full object-cover"
-                  // إظهار الكنترول للموبايل لضمان التشغيل في وضع توفير الطاقة
-                  controls={
-                    typeof window !== "undefined" && window.innerWidth <= 768
-                  }
-                  onLoadedData={() => setIsLoading(false)}
-                  style={{
-                    opacity: isLoading ? 0.5 : 1,
-                    transition: "opacity 0.5s ease-in-out",
-                  }}
-                />
-
-                {/* لو عايز تكتب كلمة Loading فوق الصورة بشكل مؤقت */}
-                {isLoading && (
-                  <div className="absolute inset-0 flex items-center justify-center text-white bg-black/20">
-                    <p>Loading...</p>
-                  </div>
-                )}
-              </div>
-            ))}
+            <div className="w-full h-[400px] overflow-hidden rounded-lg shadow-2xl">
+              <img
+                className="w-full h-full object-cover"
+                src="/img/video-photo.PNG"
+                alt="Video Photo"
+              />
+            </div>
 
             {/* section-text */}
             <div className="space-y-6">
@@ -184,8 +105,8 @@ const About = () => {
               </p>
 
               <p className="text-gray-500 leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptatem nesciunt ab voluptates blanditiis eligendi corporis.
+                Crafting Your quality, fresh roasted and perfect blended coffee
+                is our true commitment since 2006.
               </p>
 
               <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-md transition duration-300 font-medium uppercase text-sm">

@@ -467,12 +467,5 @@
         "Medium": 160
       }
     }
-  ],
-  "ABOUT-VIDEO": [
-    {
-      "id": "56",
-      "video": "/img/about-video.mp4",
-      "thumbnail": "/img/video-photo.PNG"
-    }
   ]
 }
