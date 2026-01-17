@@ -4,7 +4,7 @@ import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 const About = () => {
@@ -63,6 +63,18 @@ const About = () => {
   L.Marker.prototype.options.icon = DefaultIcon;
 
   const alexPos = [31.205446992835792, 29.90515059801361];
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const isDesktop = window.innerWidth > 768;
+    const videoEl = videoRef.current;
+
+    if (videoEl && isDesktop) {
+      videoEl.play().catch((err) => {
+        console.log("Autoplay blocked", err);
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -85,10 +97,20 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* section-video */}
             <div className="w-full h-[400px] overflow-hidden rounded-lg shadow-2xl">
-              <img
+              {/* <img
                 className="w-full h-full object-cover"
                 src="/img/video-photo.PNG"
                 alt="Video Photo"
+              /> */}
+              <video
+                className="w-full h-full object-cover"
+                ref={videoRef}
+                loop
+                muted
+                playsInline
+                autoPlay
+                controls={window.innerWidth <= 768}
+                src="/img/about-video.mp4"
               />
             </div>
 
