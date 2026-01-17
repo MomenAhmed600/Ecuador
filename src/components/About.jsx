@@ -9,6 +9,10 @@ import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -75,19 +79,24 @@ const About = () => {
     const video = videoRef.current;
     if (video) {
       video.muted = true;
-      video.setAttribute("muted", "");
       video.playsInline = true;
 
-      const promise = video.play();
-      if (promise !== undefined) {
-        promise.catch(() => {
-          const playVideo = () => {
-            video.play();
-            window.removeEventListener("touchstart", playVideo);
-          };
-          window.addEventListener("touchstart", playVideo);
+      const attemptPlay = () => {
+        video.play().catch((error) => {
+          console.log("Autoplay failed, waiting for user interaction:", error);
         });
-      }
+      };
+
+      attemptPlay();
+
+      const playOnGesture = () => {
+        video.play();
+        window.removeEventListener("touchstart", playOnGesture);
+      };
+
+      window.addEventListener("touchstart", playOnGesture);
+
+      return () => window.removeEventListener("touchstart", playOnGesture);
     }
   }, []);
 
@@ -118,6 +127,8 @@ const About = () => {
                 loop
                 muted
                 playsInline
+                webkit-playsinline="true"
+                autoPlay
                 poster="/img/video-photo.PNG"
               >
                 <source src="/img/about-video.mp4" type="video/mp4" />

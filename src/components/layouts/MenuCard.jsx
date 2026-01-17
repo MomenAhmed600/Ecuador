@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const MenuCard = React.memo(({ img, title, description, sizes = [] }) => {
   const [selectedSize, setSelectedSize] = useState(
-    sizes[0] || { size: "", price: "" }
+    sizes[0] || { size: "", price: "" },
   );
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const MenuCard = React.memo(({ img, title, description, sizes = [] }) => {
           {title}
         </h3>
 
-        <p className="text-[14px] text-gray-500 font-medium line-clamp-2 min-h-[40px] mb-4">
+        <p className="text-[14px] text-gray-500 font-medium line-clamp-2 min-h-[40px]">
           {description}
         </p>
 

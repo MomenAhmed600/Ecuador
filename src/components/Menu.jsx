@@ -10,6 +10,10 @@ const Menu = () => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     fetch("/db.json")
       .then((res) => res.json())
       .then((data) => {
@@ -166,7 +170,7 @@ const Menu = () => {
               ([key, value]) => ({
                 size: key,
                 price: `${value} EGP`,
-              })
+              }),
             );
 
             return (

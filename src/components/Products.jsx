@@ -4,6 +4,11 @@ import { motion } from "framer-motion";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     fetch("/db.json")
       .then((res) => res.json())

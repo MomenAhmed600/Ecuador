@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { BsTwitterX } from "react-icons/bs";
 import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import { FaRegCopyright } from "react-icons/fa6";
 
@@ -86,6 +87,15 @@ const Footer = () => {
               </li>
               <li>
                 <a
+                  href="https://x.com/ecuadorcoffeeme"
+                  target="blank"
+                  className="flex items-center gap-2 hover:text-gray-400 transition text-black"
+                >
+                  <BsTwitterX /> X
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.tiktok.com/@ecuadorcoffeeme?lang=en"
                   target="blank"
                   className="flex items-center gap-2 hover:text-gray-400 transition text-black"
@@ -102,30 +112,32 @@ const Footer = () => {
             </h5>
             <ul className="space-y-2">
               <li>
-                <a className="hover:text-[#fff] transition text-black">
+                <a className="hover:text-[#fff] transition text-black cursor-pointer">
                   LOURAN
                 </a>
               </li>
               <li>
-                <a className="hover:text-[#fff] transition text-black">
+                <a className="hover:text-[#fff] transition text-black cursor-pointer">
                   FOUAD ST
                 </a>
               </li>
               <li>
-                <a className="hover:text-[#fff] transition text-black">GLEEM</a>
+                <a className="hover:text-[#fff] transition text-black cursor-pointer">
+                  GLEEM
+                </a>
               </li>
               <li>
-                <a className="hover:text-[#fff] transition text-black">
+                <a className="hover:text-[#fff] transition text-black cursor-pointer">
                   RAML STATION
                 </a>
               </li>
               <li>
-                <a className="hover:text-[#fff] transition text-black">
+                <a className="hover:text-[#fff] transition text-black cursor-pointer">
                   STANLY
                 </a>
               </li>
               <li>
-                <a className="hover:text-[#fff] transition text-black">
+                <a className="hover:text-[#fff] transition text-black cursor-pointer">
                   SAN STEFANO MALL
                 </a>
               </li>
