@@ -65,7 +65,7 @@ const About = () => {
 
   const alexPos = [31.205446992835792, 29.90515059801361];
 
-  const videoRef = useRef(null);
+  // const videoRef = useRef(null);
 
   // useEffect(() => {
   //   if (videoRef.current) {
@@ -75,29 +75,45 @@ const About = () => {
   //   }
   // }, []);
 
+  // useEffect(() => {
+  //   const video = videoRef.current;
+  //   if (video) {
+  //     video.muted = true;
+  //     video.playsInline = true;
+
+  //     const attemptPlay = () => {
+  //       video.play().catch((error) => {
+  //         console.log("Autoplay failed, waiting for user interaction:", error);
+  //       });
+  //     };
+
+  //     attemptPlay();
+
+  //     const playOnGesture = () => {
+  //       video.play();
+  //       window.removeEventListener("touchstart", playOnGesture);
+  //     };
+
+  //     window.addEventListener("touchstart", playOnGesture);
+
+  //     return () => window.removeEventListener("touchstart", playOnGesture);
+  //   }
+  // }, []);
+
+  const [isvideo, setIstvideo] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const videoRef = useRef(null);
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.playsInline = true;
-
-      const attemptPlay = () => {
-        video.play().catch((error) => {
-          console.log("Autoplay failed, waiting for user interaction:", error);
-        });
-      };
-
-      attemptPlay();
-
-      const playOnGesture = () => {
-        video.play();
-        window.removeEventListener("touchstart", playOnGesture);
-      };
-
-      window.addEventListener("touchstart", playOnGesture);
-
-      return () => window.removeEventListener("touchstart", playOnGesture);
-    }
+    // ندهنا الملف من الـ public مباشرة عشان يشتغل على netlify
+    fetch("/db.json")
+      .then((res) => res.json())
+      .then((data) => {
+        // تأكد إنك مسمي الكي في db.json بـ "ABOUT-VIDEO" أو غيره حسب اختيارك
+        if (data["ABOUT-VIDEO"]) {
+          setIstvideo(data["ABOUT-VIDEO"]);
+        }
+      })
+      .catch((err) => console.error("Failed to fetch video data:", err));
   }, []);
 
   return (
@@ -120,20 +136,40 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* section-video */}
-            <div className="w-full h-[400px] overflow-hidden rounded-lg shadow-2xl">
-              <video
-                ref={videoRef}
-                className="w-full h-full object-cover"
-                loop
-                muted
-                playsInline
-                webkit-playsinline="true"
-                autoPlay
-                poster="/img/video-photo.PNG"
+            {isvideo.map((product) => (
+              <div
+                key={product.id}
+                className="relative w-full h-[400px] bg-black rounded-lg overflow-hidden"
               >
-                <source src="/img/about-video.mp4" type="video/mp4" />
-              </video>
-            </div>
+                {/* الصورة اللي هتظهر مكان التحميل (Poster) */}
+                <video
+                  ref={videoRef}
+                  src={product.video}
+                  poster={product.thumbnail} // الصورة من الـ json
+                  loop
+                  muted
+                  playsInline
+                  autoPlay
+                  className="w-full h-full object-cover"
+                  // إظهار الكنترول للموبايل لضمان التشغيل في وضع توفير الطاقة
+                  controls={
+                    typeof window !== "undefined" && window.innerWidth <= 768
+                  }
+                  onLoadedData={() => setIsLoading(false)}
+                  style={{
+                    opacity: isLoading ? 0.5 : 1,
+                    transition: "opacity 0.5s ease-in-out",
+                  }}
+                />
+
+                {/* لو عايز تكتب كلمة Loading فوق الصورة بشكل مؤقت */}
+                {isLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center text-white bg-black/20">
+                    <p>Loading...</p>
+                  </div>
+                )}
+              </div>
+            ))}
 
             {/* section-text */}
             <div className="space-y-6">
