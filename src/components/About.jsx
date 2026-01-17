@@ -64,16 +64,6 @@ const About = () => {
 
   const alexPos = [31.205446992835792, 29.90515059801361];
 
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.log("Autoplay was prevented:", error);
-      });
-    }
-  }, []);
-
   return (
     <>
       <section className="bg-gray-100 text-black py-16 px-6 md:px-12 lg:px-24">
@@ -93,24 +83,13 @@ const About = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* section-video */}
+            {/* section-img */}
             <div className="w-full h-[400px] overflow-hidden rounded-lg shadow-2xl">
-              {/* <img
+              <img
                 className="w-full h-full object-cover"
                 src="/img/video-photo.PNG"
                 alt="Video Photo"
-              /> */}
-
-              <video
-                ref={videoRef}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              >
-                <source src="/img/about-video.mp4" type="video/mp4" />
-              </video>
+              />
             </div>
 
             {/* section-text */}
