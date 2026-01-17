@@ -102,16 +102,17 @@ const About = () => {
                 src="/img/video-photo.PNG"
                 alt="Video Photo"
               /> */}
+
               <video
-                className="w-full h-full object-cover"
-                ref={videoRef}
+                autoPlay
                 loop
                 muted
                 playsInline
-                autoPlay
-                controls={window.innerWidth <= 768}
-                src="/img/about-video.mp4"
-              />
+                className="w-full h-full object-cover"
+              >
+                <source src="your-video-path.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
 
             {/* section-text */}
