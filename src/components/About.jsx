@@ -63,15 +63,13 @@ const About = () => {
   L.Marker.prototype.options.icon = DefaultIcon;
 
   const alexPos = [31.205446992835792, 29.90515059801361];
+
   const videoRef = useRef(null);
 
   useEffect(() => {
-    const isDesktop = window.innerWidth > 768;
-    const videoEl = videoRef.current;
-
-    if (videoEl && isDesktop) {
-      videoEl.play().catch((err) => {
-        console.log("Autoplay blocked", err);
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.log("Autoplay was prevented:", error);
       });
     }
   }, []);
@@ -104,6 +102,7 @@ const About = () => {
               /> */}
 
               <video
+                ref={videoRef}
                 autoPlay
                 loop
                 muted
@@ -111,7 +110,6 @@ const About = () => {
                 className="w-full h-full object-cover"
               >
                 <source src="/img/about-video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
               </video>
             </div>
 
