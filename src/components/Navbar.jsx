@@ -93,7 +93,13 @@ const Navbar = () => {
           </RouterLink>
 
           <div className="self-center">
-            <Button title="Contact Us" />
+            <a
+              href="https://www.elmenus.com/alexandria/ecuador-coffee--zmll2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button title="Order Now" />
+            </a>
           </div>
         </div>
       )}
